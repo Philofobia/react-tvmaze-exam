@@ -1,11 +1,20 @@
 import "./App.css";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { useState } from "react";
 
-import firebase from "firebase/compat/app";
+import LoginPage from "./Pages/Login/Login";
+import RegisterPage from "./Pages/Register/Register";
+
+// import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
 import "firebase/compat/firestore";
 
 //USER STATUS
-import { getAuth, createUserWithEmailAndPassword, connectAuthEmulator, signInWithEmailAndPassword } from "firebase/auth";
+import {
+  getAuth,
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
+} from "firebase/auth";
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 // TODO: Add SDKs for Firebase products that you want to use
@@ -22,25 +31,68 @@ const firebaseConfig = {
 };
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-
+const auth = getAuth(app);
 // TODO: Replace the following with your app's Firebase project configuration
 // See: https://firebase.google.com/docs/web/learn-more#config-object
 
-const auth = getAuth(app);
-createUserWithEmailAndPassword(auth, email, password)
-  .then((userCredential) => {
-    // Signed in
-    const user = userCredential.user;
-    // ...
-  })
-  .catch((error) => {
-    const errorCode = error.code;
-    const errorMessage = error.message;
-    // ..
-  });
+const App = () => {
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
 
-function App() {
-  return <h1>MY APP I WISH IT WOULD WORK.</h1>;
-}
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      element: <LoginPage />,
+    },
+    {
+      path: "/login",
+      element: <LoginPage />,
+    },
+    {
+      path: "/signUp",
+      element: (
+        <RegisterPage
+          handleInputs={(e, email, password, existingAcc) =>
+            handleData(email, password, existingAcc)
+          }
+        />
+      ),
+    },
+  ]);
+
+  const handleData = (
+    emailIn: string,
+    passwordIn: string,
+    existingAcc: boolean
+  ) => {
+    setEmail(emailIn);
+    setPassword(passwordIn);
+    handleCreationOrAccess(existingAcc);
+  };
+
+  const handleCreationOrAccess = (existingAcc: boolean) => {
+    if (existingAcc) {
+      signInWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+          const user = userCredential.user;
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+        });
+    } else {
+      createUserWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+          const user = userCredential.user;
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+        });
+    }
+  };
+
+  return <RouterProvider router={router} />;
+};
 
 export default App;
