@@ -1,32 +1,36 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import { CurrentUserConsumer } from "../../context/AuthContext";
 
-type props = {
-  handleInputs: (
-    e: React.MouseEvent<HTMLButtonElement>,
-    email: string,
-    password: string,
-    existingAcc: boolean
-  ) => void;
-  handleLogOut: (e: React.MouseEvent<HTMLButtonElement>) => void;
-};
-
-const LoginPage = (props: props) => {
+const LoginPage = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const [error, setError] = useState<string>("");
+  const { currentUser, signIn, signingOut } = CurrentUserConsumer();
 
-  const handleEmail = (input: string) => {
-    setEmail(input);
+  const handleInput = (input: string, handle: boolean) => {
+    if (handle) setEmail(input);
+    else setPassword(input);
   };
 
-  const handlePassword = (input: string) => {
-    setPassword(input);
+  const handleSignIn = () => {
+    try {
+      signIn(email, password)
+    } catch (err: any) {
+      setError(err.message)
+    }
+  };
+
+  const handleSignOut =  () => {
+    try {
+      signingOut()
+    } catch (err: any) {
+      setError(err.message)
+    }
   };
 
   const buttonDisabled = () =>
     email.trim().length === 0 || password.trim().length === 0;
-  const missingIputs = () => alert("YOU FORGOT SOMETHING");
-
   return (
     <div className="container mx-auto px-4">
       <h2 className="">LOGIN TO THE WEBSITE</h2>
@@ -39,7 +43,7 @@ const LoginPage = (props: props) => {
             type="email"
             placeholder="Type your email here"
             className="input input-bordered w-full max-w-xs"
-            onChange={(e) => handleEmail(e.target.value)}
+            onChange={(e) => handleInput(e.target.value, true)}
           />
         </div>
         <div>
@@ -50,27 +54,22 @@ const LoginPage = (props: props) => {
             type="password"
             placeholder="Type your password here"
             className="input input-bordered w-full max-w-xs"
-            onChange={(e) => handlePassword(e.target.value)}
+            onChange={(e) => handleInput(e.target.value, false)}
           />
         </div>
         <div>
           <button
             className="btn btn-primary mr-5"
             disabled={buttonDisabled()}
-            onClick={(e) =>
-              email && password
-                ? props.handleInputs(e, email, password, true)
-                : missingIputs()
-            }
+            onClick={handleSignIn}
           >
             SIGN IN
           </button>
-          <button
-            className="btn btn-primary"
-            onClick={(e) => props.handleLogOut(e)}
-          >
-            SIGN OUT
-          </button>
+          {currentUser !== null && (
+            <button className="btn btn-primary" onClick={handleSignOut}>
+              SIGN OUT
+            </button>
+          )}
         </div>
       </div>
       <Link
