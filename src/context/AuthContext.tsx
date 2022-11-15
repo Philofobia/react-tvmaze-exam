@@ -7,8 +7,11 @@ import {
   signInWithEmailAndPassword,
   signOut,
   User,
+  GoogleAuthProvider,
+  signInWithPopup,
 } from "firebase/auth";
 
+auth.languageCode = "it";
 interface UserContextProviderProps {
   children: React.ReactNode;
 }
@@ -17,12 +20,14 @@ interface UseAuthContext {
   currentUser: User | null;
   signIn: (email: string, password: string) => void;
   signingOut: () => void;
+  signingInWithGoogle: () => void;
   createUser: (email: string, password: string) => void;
 }
 export const UserContext = createContext<UseAuthContext>({
   currentUser: null,
   signIn: async () => {},
   signingOut: async () => {},
+  signingInWithGoogle: async () => {},
   createUser: async () => {},
 });
 
@@ -37,6 +42,28 @@ export const AuthContextProvider = ({ children }: UserContextProviderProps) => {
       })
       .catch((error) => {
         //const errorMessage = error.message;
+      });
+  };
+  const signingInWithGoogle = async () => {
+    const google_provider = new GoogleAuthProvider();
+    return await signInWithPopup(auth, google_provider)
+      .then((result) => {
+        // This gives you a Google Access Token. You can use it to access the Google API.
+        const credential = GoogleAuthProvider.credentialFromResult(result);
+        const token = credential?.accessToken;
+        // The signed-in user info.
+        const user = result.user;
+        // ...
+      })
+      .catch((error) => {
+        // Handle Errors here.
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        // The email of the user's account used.
+        const email = error.customData.email;
+        // The AuthCredential type that was used.
+        const credential = GoogleAuthProvider.credentialFromError(error);
+        // ...
       });
   };
 
@@ -75,7 +102,7 @@ export const AuthContextProvider = ({ children }: UserContextProviderProps) => {
 
   return (
     <UserContext.Provider
-      value={{ currentUser, signIn, signingOut, createUser }}
+      value={{ currentUser, signIn, signingInWithGoogle, signingOut, createUser }}
     >
       {children}
     </UserContext.Provider>

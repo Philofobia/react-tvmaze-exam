@@ -6,7 +6,7 @@ const LoginPage = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [error, setError] = useState<string>("");
-  const { currentUser, signIn, signingOut } = CurrentUserConsumer();
+  const { currentUser, signIn, signingInWithGoogle, signingOut } = CurrentUserConsumer();
 
   const handleInput = (input: string, handle: boolean) => {
     if (handle) setEmail(input);
@@ -16,6 +16,14 @@ const LoginPage = () => {
   const handleSignIn = () => {
     try {
       signIn(email, password)
+    } catch (err: any) {
+      setError(err.message)
+    }
+  };
+
+  const handleSignInWithGoogle =  () => {
+    try {
+      signingInWithGoogle()
     } catch (err: any) {
       setError(err.message)
     }
@@ -72,6 +80,9 @@ const LoginPage = () => {
           )}
         </div>
       </div>
+      <button className="btn btn-primary mr-5" onClick={handleSignInWithGoogle}>
+              GOOGLE
+            </button>
       <Link
         to="/authentication/register"
         className="text-red-600 hover:text-red-700 focus:text-red-700 transition duration-200 ease-in-out"

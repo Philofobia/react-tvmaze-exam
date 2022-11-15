@@ -4,7 +4,6 @@ import {
   RouterProvider,
   Navigate,
 } from "react-router-dom";
-import { CurrentUserConsumer } from "./context/AuthContext";
 
 import { AuthContextProvider } from "./context/AuthContext";
 import LoginPage from "./Pages/Login/Login";
