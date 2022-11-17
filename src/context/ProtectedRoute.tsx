@@ -1,17 +1,18 @@
+import { useContext } from "react";
 import { Navigate } from "react-router-dom";
-
+import { UserContext } from "./AuthContext";
 interface ProtectedRouteProps {
-    children: React.ReactNode;
-  }
+  children: React.ReactNode;
+}
 
 const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
-  const user: string = JSON.parse(localStorage.getItem('user') || "null");
+  const { currentUser } = useContext(UserContext);
 
-  return user ? (
-    <>{children}</>
-  ) : (
-    <Navigate to="/authentication/login" replace />
-  );
+  if (currentUser === undefined) return <>Loading...</>;
+  else if (currentUser === null) return <Navigate to="/authentication/login" />;
+  else {
+    return <>{children}</>;
+  }
 };
 
-export default ProtectedRoute
+export default ProtectedRoute;
