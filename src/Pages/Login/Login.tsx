@@ -43,8 +43,10 @@ const LoginPage = () => {
 
   return (
     <div className="container mx-auto px-4">
-      <h2 className="font-title text-4xl antialiasing my-12 text-center">MOVIE LOVE</h2>
-      <div className="form-control grid gap-4 grid-cols-1 grid-rows-3">
+      <h2 className="font-title text-4xl antialiasing my-10 text-center">
+        MOVIE LOVE
+      </h2>
+      <div className="form-control grid gap-3 grid-cols-1 grid-rows-3">
         <div className="font-body text-xl antialiasing">
           <label className="label">
             <span className="label-text">Type your e-mail.</span>
@@ -67,36 +69,33 @@ const LoginPage = () => {
             onChange={(e) => handleInput(e.target.value, false)}
           />
         </div>
-        <div>
-          <button
-            className="btn btn-primary mr-5"
-            disabled={buttonDisabled()}
-            onClick={handleSignIn}
-          >
-            SIGN IN
-          </button>
-          {currentUser !== null && (
-            <button className="btn btn-primary" onClick={handleSignOut}>
+        <button
+          className="btn"
+          disabled={buttonDisabled()}
+          onClick={handleSignIn}
+        >
+          SIGN IN
+        </button>
+        {/*           {currentUser !== null && (
+            <button className="btn" onClick={handleSignOut}>
               SIGN OUT
             </button>
-          )}
-        </div>
+          )} */}
+        <button className="google-btn" onClick={handleSignInWithGoogle}>
+          <img
+            src="https://img.icons8.com/color/16/000000/google-logo.png"
+            alt="google"
+          />
+          Sign with Google
+        </button>
+        <p className="text-center">You dont have an account?</p>
+        <Link
+          to="/authentication/register"
+          className="btn reg-btn"
+        >
+          Register
+        </Link>
       </div>
-      <button className="btn btn-primary mr-5" onClick={handleSignInWithGoogle}>
-        GOOGLE
-      </button>
-      <Link
-        to="/authentication/register"
-        className="text-red-600 hover:text-red-700 focus:text-red-700 transition duration-200 ease-in-out"
-      >
-        Register
-      </Link>
-      <Link
-        to="/home"
-        className="text-red-600 hover:text-red-700 focus:text-red-700 transition duration-200 ease-in-out"
-      >
-        Home
-      </Link>
     </div>
   );
 };

@@ -25,9 +25,11 @@ const RegisterPage = () => {
   if (!currentUser) {
     return (
       <div className="container mx-auto px-4">
-        <h2 className="">REGISTER TO THE WEBSITE</h2>
+        <h2 className="font-title text-2xl antialiasing my-10 text-center">
+        Create your account
+      </h2>
         <div className="form-control grid gap-4 grid-cols-1 grid-rows-3">
-          <div>
+          <div className="font-body text-xl antialiasing">
             <label className="label">
               <span className="label-text">What is your e-mail?</span>
             </label>
@@ -38,7 +40,7 @@ const RegisterPage = () => {
               onChange={(e) => handleInput(e.target.value, true)}
             />
           </div>
-          <div>
+          <div className="font-body text-xl antialiasing">
             <label className="label">
               <span className="label-text">Choose your password.</span>
             </label>
