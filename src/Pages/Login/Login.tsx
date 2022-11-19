@@ -6,7 +6,7 @@ const LoginPage = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [error, setError] = useState<string>("");
-  const { currentUser, signIn, signingInWithGoogle, signingOut } =
+  const {  signIn, signingInWithGoogle } =
     CurrentUserConsumer();
 
   const handleInput = (input: string, handle: boolean) => {
@@ -25,14 +25,6 @@ const LoginPage = () => {
   const handleSignInWithGoogle = () => {
     try {
       signingInWithGoogle();
-    } catch (err: any) {
-      setError(err.message);
-    }
-  };
-
-  const handleSignOut = () => {
-    try {
-      signingOut();
     } catch (err: any) {
       setError(err.message);
     }
