@@ -53,3 +53,7 @@ body {
 .reg-btn {
   line-height: 50px;
 }
+
+#btn-search {
+  width: auto;
+}
