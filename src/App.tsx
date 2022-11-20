@@ -1,4 +1,5 @@
 import "./App.css";
+
 import {
   createBrowserRouter,
   RouterProvider,
@@ -6,15 +7,16 @@ import {
 } from "react-router-dom";
 
 import { AuthContextProvider } from "./context/AuthContext";
+import ProtectedRoute from "./context/ProtectedRoute";
+
+import { store } from "./redux/store/store";
+import { Provider } from "react-redux";
+
 import LoginPage from "./Pages/Login/Login";
 import RegisterPage from "./Pages/Register/Register";
 import HomePage from "./Pages/Home/Home";
 import PageNotFound from "./Pages/PageNotFound/PageNotFound";
-import ProtectedRoute from "./context/ProtectedRoute";
-
-// import firebase from "firebase/compat/app";
-import "firebase/compat/auth";
-import "firebase/compat/firestore";
+import FavouritePage from "./Pages/Favourite/Favourite";
 
 const App = () => {
   const router = createBrowserRouter([
@@ -25,6 +27,14 @@ const App = () => {
     {
       path: "/authentication/register",
       element: <RegisterPage />,
+    },
+    {
+      path: "/favourites",
+      element: (
+        <ProtectedRoute>
+          <FavouritePage />
+        </ProtectedRoute>
+      ),
     },
     {
       path: "/home",
@@ -49,9 +59,11 @@ const App = () => {
   ]);
 
   return (
-          <AuthContextProvider>
-            <RouterProvider router={router} />
-          </AuthContextProvider>
+    <AuthContextProvider>
+      <Provider store={store}>
+        <RouterProvider router={router} />
+      </Provider>
+    </AuthContextProvider>
   );
 };
 

@@ -1,6 +1,5 @@
 import { propsMovieCard } from "../services/models";
 import parse from "html-react-parser";
-import { useEffect } from "react";
 
 const CardComponent = (props: propsMovieCard) => {
   const favouriteMovie = () => {
