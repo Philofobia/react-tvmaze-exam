@@ -17,7 +17,6 @@ const HomePage = () => {
       setError(err.message);
     }
   };
-
   const handleShowsSearch = () => {
     getShowsByname(search).then((res) => setShows(res));
   };
@@ -27,6 +26,7 @@ const HomePage = () => {
       <h1 className="font-title text-2xl antialiasing my-5 text-center">
         SEARCH YOUR FAVORITE MOVIE
       </h1>
+      <button className="btn m-5" onClick={handleSignOut}>LOG OUT</button>
       <div className="flex items-center mx-5">
         <div className="relative w-full">
           <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
