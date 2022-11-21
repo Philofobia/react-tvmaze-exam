@@ -68,11 +68,6 @@ const LoginPage = () => {
         >
           SIGN IN
         </button>
-        {/*           {currentUser !== null && (
-            <button className="btn" onClick={handleSignOut}>
-              SIGN OUT
-            </button>
-          )} */}
         <button className="google-btn" onClick={handleSignInWithGoogle}>
           <img
             src="https://img.icons8.com/color/16/000000/google-logo.png"

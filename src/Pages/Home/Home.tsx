@@ -4,11 +4,21 @@ import { getShowsByname } from "../../services/Api";
 import { searchMovieBool } from "../../services/models";
 import CardComponent from "../../shared/Card";
 
+import { useDispatch, useSelector } from "react-redux";
+import { addShow, removeShow } from "../../redux/reducers/favourite.slice";
+import { RootState } from "../../redux/store/store";
+import { setUserShows, deleteUserShow } from "../../services/firebase.db";
+
 const HomePage = () => {
   const [error, setError] = useState();
   const [shows, setShows] = useState<searchMovieBool[]>();
   const [search, setSearch] = useState<string>("");
-  const { signingOut } = CurrentUserConsumer();
+  const { signingOut, currentUser } = CurrentUserConsumer();
+
+  const favShows = useSelector((state: RootState) => {
+    return state.favShow;
+  });
+  const dispatch = useDispatch();
 
   const handleSignOut = () => {
     try {
@@ -20,13 +30,25 @@ const HomePage = () => {
   const handleShowsSearch = () => {
     getShowsByname(search).then((res) => setShows(res));
   };
+  const handleShowFav = (show: searchMovieBool) => {
+    console.log(show.favourite)
+    if (show.favourite === false) {
+      show.favourite = true;
+      setUserShows(currentUser!.uid, show);
+    } else {
+      show.favourite = false;
+      deleteUserShow(currentUser!.uid, show);
+    }
+  };
 
   return (
     <>
       <h1 className="font-title text-2xl antialiasing my-5 text-center">
         SEARCH YOUR FAVORITE MOVIE
       </h1>
-      <button className="btn m-5" onClick={handleSignOut}>LOG OUT</button>
+      <button className="btn m-5" onClick={handleSignOut}>
+        LOG OUT
+      </button>
       <div className="flex items-center mx-5">
         <div className="relative w-full">
           <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
@@ -77,7 +99,13 @@ const HomePage = () => {
       <hr className="mx-5 my-5" />
       <div className="flex flex-col flex-wrap md:flex-row">
         {shows &&
-          shows.map((show) => <CardComponent show={show} key={show.show.id} />)}
+          shows.map((show) => (
+            <CardComponent
+              handleShow={(event, show) => handleShowFav(show)}
+              show={show}
+              key={show.show.id}
+            />
+          ))}
       </div>
     </>
   );

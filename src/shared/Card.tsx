@@ -2,10 +2,6 @@ import { propsMovieCard } from "../services/models";
 import parse from "html-react-parser";
 
 const CardComponent = (props: propsMovieCard) => {
-  const favouriteMovie = () => {
-    props.show.favourite = !props.show.favourite;
-  };
-
   return (
     <div className="card w-96 bg-base-100 shadow-xl m-3">
       <figure className="max-h-64">
@@ -24,7 +20,7 @@ const CardComponent = (props: propsMovieCard) => {
           <button
             className="btn"
             style={{ width: 50, marginLeft: 10 }}
-            onClick={favouriteMovie}
+            onClick={event => props.handleShow(event, props.show)}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"

@@ -18,4 +18,5 @@ export interface searchMovieBool extends searchMovieByName {
 // SHOWS CARDS
 export interface propsMovieCard {
   show: searchMovieBool;
+  handleShow: (event: React.MouseEvent<HTMLButtonElement>, show: searchMovieBool) => void;
 }

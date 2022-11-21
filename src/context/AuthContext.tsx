@@ -124,7 +124,7 @@ export const AuthContextProvider = ({ children }: UserContextProviderProps) => {
         signIn,
         signingInWithGoogle,
         signingOut,
-        createUser
+        createUser,
       }}
     >
       {children}

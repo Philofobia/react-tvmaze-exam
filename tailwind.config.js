@@ -4,7 +4,7 @@ module.exports = {
     "./src/**/*.{js,jsx,ts,tsx}",
   ],
   theme: {
-    fontFamily: { 
+    fontFamily: {
       'title': ['Merriweather', 'serif'],
       'body': ['Source Sans Pro', 'sans-serif'],
     },

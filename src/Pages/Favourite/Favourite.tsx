@@ -1,10 +1,10 @@
-import { useDispatch, useSelector } from "react-redux";
-import { addShow, removeShow } from "../../redux/reducers/favourite.slice";
-import { RootState } from "../../redux/store/store";
 import CardComponent from "../../shared/Card";
-
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../redux/store/store";
 import { CurrentUserConsumer } from "../../context/AuthContext";
-import { getUserShows } from "../../services/firebase.db";
+import { getUsersShows } from "../../services/firebase.db";
+import { useEffect } from "react";
+import { getShows } from "../../redux/reducers/favourite.slice";
 
 const FavouritePage = () => {
   const { currentUser } = CurrentUserConsumer();
@@ -13,28 +13,24 @@ const FavouritePage = () => {
   });
   const dispatch = useDispatch();
 
-  const handleUserShow = () => {
+  useEffect(() => {
     if (currentUser) {
-      getUserShows(currentUser.uid, (Math.random())*10);
+      const favShows = getUsersShows(currentUser!.uid);
+      console.log(favShows)
+     /*  dispatch(getShows(favShows)) */
     }
-  };
+  });
 
   return (
     <>
       <h2 className="font-title text-2xl antialiasing my-5 text-center">
         MY FAV SHOWS
       </h2>
-      <button className="btn" onClick={handleUserShow}>
-        SI
-      </button>
-      <button className="btn" onClick={() => dispatch(addShow)}>
-        NO
-      </button>
       <div className="flex flex-col flex-wrap md:flex-row">
-        {favShows &&
-          favShows.map((show, index) => (
+        {/*         {favShows &&
+          favShows.map((show, index: number) => (
             <CardComponent show={show} key={index} />
-          ))}
+          ))} */}
       </div>
     </>
   );
