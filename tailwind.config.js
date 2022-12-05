@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
+  darkMode: 'class',
   content: [
     "./src/**/*.{js,jsx,ts,tsx}",
   ],
@@ -15,16 +16,6 @@ module.exports = {
       'xl': '1280px',
       '2xl': '1536px',
     },
-    backdropBlur: ({ theme }) => theme('blur'),
-    backdropBrightness: ({ theme }) => theme('brightness'),
-    backdropContrast: ({ theme }) => theme('contrast'),
-    backdropGrayscale: ({ theme }) => theme('grayscale'),
-    backdropHueRotate: ({ theme }) => theme('hueRotate'),
-    backdropInvert: ({ theme }) => theme('invert'),
-    backdropOpacity: ({ theme }) => theme('opacity'),
-    backdropSaturate: ({ theme }) => theme('saturate'),
-    backdropSepia: ({ theme }) => theme('sepia'),
-    backgroundColor: ({ theme }) => theme('colors'),
     extend: {},
   },
   plugins: [require("daisyui")],

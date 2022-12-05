@@ -1,36 +1,48 @@
-import CardComponent from "../../shared/Card";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../redux/store/store";
+import CardComponent from "../../shared/Card/Card";
+import { useEffect, useState } from "react";
+import { firebaseDbMovie } from "../../services/models";
+import { searchMovieBool } from "../../services/models";
 import { CurrentUserConsumer } from "../../context/AuthContext";
-import { getUsersShows } from "../../services/firebase.db";
-import { useEffect } from "react";
-import { getShows } from "../../redux/reducers/favourite.slice";
+import {
+  setUserShows,
+  deleteUserShow,
+  getUsersShows,
+} from "../../services/firebase.db";
+import HeaderComponent from "../../shared/Header/Header";
 
 const FavouritePage = () => {
+  const [shows, setShow] = useState<firebaseDbMovie>();
   const { currentUser } = CurrentUserConsumer();
-  const favShows = useSelector((state: RootState) => {
-    return state.favShow;
-  });
-  const dispatch = useDispatch();
+
+  const handleShowFav = (show: searchMovieBool) => {
+    if (show.favourite === false) {
+      show.favourite = true;
+      setUserShows(currentUser!.uid, show);
+    } else {
+      show.favourite = false;
+      deleteUserShow(currentUser!.uid, show);
+    }
+  };
 
   useEffect(() => {
-    if (currentUser) {
-      const favShows = getUsersShows(currentUser!.uid);
-      console.log(favShows)
-     /*  dispatch(getShows(favShows)) */
-    }
-  });
+    getUsersShows(currentUser!.uid).then((res) => setShow(res));
+  }, [currentUser?.uid]);
 
   return (
     <>
+      <HeaderComponent />
       <h2 className="font-title text-2xl antialiasing my-5 text-center">
         MY FAV SHOWS
       </h2>
       <div className="flex flex-col flex-wrap md:flex-row">
-        {/*         {favShows &&
-          favShows.map((show, index: number) => (
-            <CardComponent show={show} key={index} />
-          ))} */}
+        {shows &&
+          Object.keys(shows).map((key, index) => (
+            <CardComponent
+              handleShow={(event, show) => handleShowFav(show)}
+              show={shows[key]}
+              key={index}
+            />
+          ))}
       </div>
     </>
   );

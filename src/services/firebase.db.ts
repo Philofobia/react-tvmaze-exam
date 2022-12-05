@@ -1,19 +1,14 @@
 import { database } from "../firebase";
 import { update, remove, ref, onValue } from "firebase/database";
-import { searchMovieBool } from "./models";
-import { getShowsByname } from "./Api";
-import { useDispatch } from "react-redux";
-import { User } from "firebase/auth";
-
-
+import { firebaseDbMovie, searchMovieBool } from "./models";
 
 export const getUsersShows = async (userId: string) => {
+  let data: firebaseDbMovie = {};
   const userShow = ref(database, "users/" + userId + "/favShows");
-  const realData = onValue(userShow, (snapshot) => {
-    const data = snapshot.val();
-    return data;
+  onValue(userShow, (snapshot) => {
+    data = snapshot.val();
   });
-  return realData
+  return data;
 };
 
 export const setUserShows = async (userId: string, show: searchMovieBool) => {

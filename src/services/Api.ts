@@ -1,13 +1,13 @@
-import { searchMovieBool, searchMovieByName } from "./models";
+import { firebaseDbMovie, searchMovieBool, searchMovieByName } from "./models";
 
 const URL_API = "https://api.tvmaze.com";
 
 export const getShowsByname = async (
   query: string
-): Promise<searchMovieBool[]> => {
+): Promise<firebaseDbMovie> => {
   query = query.trim();
   if (query.length === 0) {
-    return [];
+    return {};
   }
 
   const res = await fetch(`${URL_API}/search/shows?q=${query}`);
@@ -16,5 +16,9 @@ export const getShowsByname = async (
     ...el,
     favourite: false,
   }));
-  return mappedData;
+  const objData: firebaseDbMovie = {};
+  mappedData.forEach((element) => {
+    objData[element.show.id] = element;
+  })
+  return objData;
 };

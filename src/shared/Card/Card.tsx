@@ -1,4 +1,4 @@
-import { propsMovieCard } from "../services/models";
+import { propsMovieCard } from "../../services/models";
 import parse from "html-react-parser";
 
 const CardComponent = (props: propsMovieCard) => {

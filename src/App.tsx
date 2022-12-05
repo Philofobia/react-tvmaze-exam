@@ -50,7 +50,11 @@ const App = () => {
     },
     {
       path: "/",
-      element: <Navigate to="/authentication/login" />,
+      element: (
+        <ProtectedRoute>
+          <Navigate to="/home" />
+        </ProtectedRoute>
+      ),
     },
     {
       path: "*",

@@ -1,37 +1,25 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { CurrentUserConsumer } from "../../context/AuthContext";
 import { getShowsByname } from "../../services/Api";
-import { searchMovieBool } from "../../services/models";
-import CardComponent from "../../shared/Card";
-
-import { useDispatch, useSelector } from "react-redux";
-import { addShow, removeShow } from "../../redux/reducers/favourite.slice";
-import { RootState } from "../../redux/store/store";
+import { firebaseDbMovie, searchMovieBool } from "../../services/models";
+import CardComponent from "../../shared/Card/Card";
 import { setUserShows, deleteUserShow } from "../../services/firebase.db";
+import { useSearchParams } from "react-router-dom";
+import HeaderComponent from "../../shared/Header/Header";
 
 const HomePage = () => {
-  const [error, setError] = useState();
-  const [shows, setShows] = useState<searchMovieBool[]>();
+  const [shows, setShows] = useState<firebaseDbMovie>();
   const [search, setSearch] = useState<string>("");
-  const { signingOut, currentUser } = CurrentUserConsumer();
+  const [searchParam, setSearchParam] = useSearchParams();
+  const { currentUser } = CurrentUserConsumer();
 
-  const favShows = useSelector((state: RootState) => {
-    return state.favShow;
-  });
-  const dispatch = useDispatch();
-
-  const handleSignOut = () => {
-    try {
-      signingOut();
-    } catch (err: any) {
-      setError(err.message);
-    }
-  };
-  const handleShowsSearch = () => {
-    getShowsByname(search).then((res) => setShows(res));
+  const handleOnButtonSearch = () => {
+    getShowsByname(searchParam?.get("search") || "").then((res) =>
+      setShows(res)
+    );
   };
   const handleShowFav = (show: searchMovieBool) => {
-    console.log(show.favourite)
+    console.log(show.favourite);
     if (show.favourite === false) {
       show.favourite = true;
       setUserShows(currentUser!.uid, show);
@@ -40,16 +28,16 @@ const HomePage = () => {
       deleteUserShow(currentUser!.uid, show);
     }
   };
-
+  useEffect(() => {
+    handleOnButtonSearch();
+  }, [searchParam]);
   return (
     <>
+    <HeaderComponent />
       <h1 className="font-title text-2xl antialiasing my-5 text-center">
         SEARCH YOUR FAVORITE MOVIE
       </h1>
-      <button className="btn m-5" onClick={handleSignOut}>
-        LOG OUT
-      </button>
-      <div className="flex items-center mx-5">
+      <div className="flex items-center mx-5 font-title text-2xl antialiasing">
         <div className="relative w-full">
           <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
             <svg
@@ -77,7 +65,7 @@ const HomePage = () => {
         <button
           id="btn-search"
           className="p-2.5 ml-2 text-sm rounded-lg border btn hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-orange-300 dark:bg-orange-600 dark:hover:bg-orange-700 dark:focus:ring-orange-800"
-          onClick={handleShowsSearch}
+          onClick={() => setSearchParam({ search: search })}
           disabled={search.length > 1 ? false : true}
         >
           <svg
@@ -99,11 +87,11 @@ const HomePage = () => {
       <hr className="mx-5 my-5" />
       <div className="flex flex-col flex-wrap md:flex-row">
         {shows &&
-          shows.map((show) => (
+          Object.keys(shows).map((key) => (
             <CardComponent
               handleShow={(event, show) => handleShowFav(show)}
-              show={show}
-              key={show.show.id}
+              show={shows[key]}
+              key={key}
             />
           ))}
       </div>
