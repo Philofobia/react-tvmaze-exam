@@ -1,22 +1,23 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 export interface favSlice {
-  theme: boolean;
+  theme: string;
 }
 
 const initalState: favSlice = {
-  theme: true,
+  theme: "light",
 };
 
-export const favouriteSlice = createSlice({
+export const themeSlice = createSlice({
   name: "theme",
   initialState: initalState,
   reducers: {
     switchTheme: (state) => {
-      state.theme = !state.theme;
+      if (state.theme === "light") state.theme = "dark"
+      else state.theme = "light"
     },
   },
 });
 
-export const { switchTheme } = favouriteSlice.actions;
-export default favouriteSlice.reducer;
+export const { switchTheme } = themeSlice.actions;
+export default themeSlice.reducer;

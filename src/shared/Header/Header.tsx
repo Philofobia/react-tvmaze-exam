@@ -1,7 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { CurrentUserConsumer } from "../../context/AuthContext";
 import AvatarImage from "../../empty_avatar.webp";
+
+import { useSelector, useDispatch } from "react-redux";
+import { RootState } from "../../redux/store/store";
+import { switchTheme } from "../../redux/reducers/theme.slice";
 
 const HeaderComponent = () => {
   const { signingOut, currentUser } = CurrentUserConsumer();
@@ -15,11 +19,17 @@ const HeaderComponent = () => {
     }
   };
 
-  const handleTheme = () => {
-    
-  }
+  const theme = useSelector((state: RootState) => {
+    return state.theme.theme;
+  })
+  const dispatch = useDispatch();
+  useEffect(()=> {
+    const body = window.document.body;
+    body.className = theme;
+  }, [theme])
+
   return (
-    <header className="pointer-events-auto">
+    <header className="bg-white dark:bg-gray-700 dark:text-white">
       <nav className="navbar navbar-expand-lg shadow-md py-2 relative flex items-center w-full justify-between">
         <div>
           <ul className="navbar-nav mr-auto lg:flex lg:flex-row">
@@ -39,7 +49,7 @@ const HeaderComponent = () => {
               </button>
             </li>
             <li className="ml-3 nav-item">
-              <button className="btn" onClick={handleTheme}>
+              <button className="btn" onClick={() => dispatch(switchTheme())}>
                 THEME
               </button>
             </li>

@@ -1,5 +1,3 @@
-import "./App.css";
-
 import {
   createBrowserRouter,
   RouterProvider,
@@ -9,8 +7,8 @@ import {
 import { AuthContextProvider } from "./context/AuthContext";
 import ProtectedRoute from "./context/ProtectedRoute";
 
-import { store } from "./redux/store/store";
 import { Provider } from "react-redux";
+import { store } from "./redux/store/store";
 
 import LoginPage from "./Pages/Login/Login";
 import RegisterPage from "./Pages/Register/Register";
@@ -62,10 +60,11 @@ const App = () => {
     },
   ]);
 
+
   return (
     <AuthContextProvider>
       <Provider store={store}>
-        <RouterProvider router={router} />
+          <RouterProvider router={router} />
       </Provider>
     </AuthContextProvider>
   );
