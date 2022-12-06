@@ -1,9 +1,7 @@
 import { useEffect, useState } from "react";
-import { CurrentUserConsumer } from "../../context/AuthContext";
 import { getShowsByname } from "../../services/Api";
-import { firebaseDbMovie, searchMovieBool } from "../../services/models";
-import CardComponent from "../../shared/Card/Card";
-import { setUserShows, deleteUserShow } from "../../services/firebase.db";
+import { firebaseDbMovie } from "../../services/models";
+import CardComponent from "../../shared/Components/Card/Card";
 import { useSearchParams } from "react-router-dom";
 import HeaderComponent from "../../shared/Header/Header";
 
@@ -11,25 +9,16 @@ const HomePage = () => {
   const [shows, setShows] = useState<firebaseDbMovie>();
   const [search, setSearch] = useState<string>("");
   const [searchParam, setSearchParam] = useSearchParams();
-  const { currentUser } = CurrentUserConsumer();
 
   const handleOnButtonSearch = () => {
     getShowsByname(searchParam?.get("search") || "").then((res) =>
       setShows(res)
     );
   };
-  const handleShowFav = (show: searchMovieBool) => {
-    if (show.favourite === false) {
-      setUserShows(currentUser!.uid, show);
-      show.favourite = true;
-    } else {
-      deleteUserShow(currentUser!.uid, show);
-      show.favourite = false;
-    }
-  };
-  useEffect(() => {
+
+   useEffect(() => {
     handleOnButtonSearch();
-  }, [searchParam]);
+  }, [searchParam]); 
 
   return (
     <>
@@ -89,7 +78,6 @@ const HomePage = () => {
         {shows &&
           Object.keys(shows).map((key) => (
             <CardComponent
-              handleShow={(event, show) => handleShowFav(show)}
               show={shows[key]}
               key={key}
             />

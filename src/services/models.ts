@@ -1,5 +1,3 @@
-import { MouseEventHandler } from "react";
-
 // API SEARCH SHOWS
 export interface searchMovieByName {
   show: {
@@ -20,10 +18,6 @@ export interface searchMovieBool extends searchMovieByName {
 // SHOWS CARDS
 export interface propsMovieCard {
   show: searchMovieBool;
-  handleShow: (
-    event: React.MouseEvent<HTMLButtonElement>,
-    show: searchMovieBool
-  ) => void;
 }
 
 //FIREBASE DB GET

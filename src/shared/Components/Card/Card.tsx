@@ -1,8 +1,27 @@
-import { propsMovieCard } from "../../services/models";
+import { propsMovieCard } from "../../../services/models";
 import parse from "html-react-parser";
 import { Link } from "react-router-dom";
+import { CurrentUserConsumer } from "../../../context/AuthContext";
+import { setUserShows, deleteUserShow } from "../../../services/firebase.db";
+import { searchMovieBool } from "../../../services/models";
+import useFavoruiteCheck from "../../../customHooks/useFavouriteCheck";
+import { useEffect } from "react";
 
 const CardComponent = (props: propsMovieCard) => {
+  const { currentUser } = CurrentUserConsumer();
+  const favourite = useFavoruiteCheck(props.show.show.id);
+
+  const handleShowFav = (show: searchMovieBool) => {
+    if (show.favourite === false) {
+      props.show.favourite = true;
+      setUserShows(currentUser!.uid, show);
+    } else {
+      props.show.favourite = false;
+      deleteUserShow(currentUser!.uid, show);
+    }
+  };
+  useEffect(()=> {}, [favourite])
+
   return (
     <div className="card w-96 bg-base-100 shadow-xl m-3">
       <figure className="max-h-64">
@@ -21,11 +40,11 @@ const CardComponent = (props: propsMovieCard) => {
           <button
             className="btn"
             style={{ width: 50, marginLeft: 10 }}
-            onClick={(event) => props.handleShow(event, props.show)}
+            onClick={() => handleShowFav(props.show)}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              fill={props.show.favourite ? "black" : "none"}
+              fill={favourite ? "black" : "none"}
               viewBox="2 2 20 20"
               stroke="black"
             >
@@ -50,11 +69,9 @@ const CardComponent = (props: propsMovieCard) => {
             </div>
           ))}
         </div>
-          <Link to={"/details/" + props.show.show.id}>
-            <button className="btn">
-              READ MORE
-            </button>
-          </Link>
+        <Link to={"/details/" + props.show.show.id}>
+          <button className="btn">READ MORE</button>
+        </Link>
       </div>
     </div>
   );
