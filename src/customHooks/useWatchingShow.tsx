@@ -12,7 +12,6 @@ const useWatchingShows = (userId: string | null | undefined) => {
       onValue(userShow, (snapshot) => {
         const data = snapshot.val();
         setwatching(data);
-        console.log(data)
       });
     } else return;
   }, [userId]);
