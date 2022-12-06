@@ -2,21 +2,33 @@ import CardComponent from "../../shared/Components/Card/Card";
 import { CurrentUserConsumer } from "../../context/AuthContext";
 import HeaderComponent from "../../shared/Header/Header";
 import useFavouriteShows from "../../customHooks/useFavouriteShow";
+import useWatchingShows from "../../customHooks/useWatchingShow";
 
 const FavouritePage = () => {
   const { currentUser } = CurrentUserConsumer();
-  const shows = useFavouriteShows(currentUser?.uid);
+  const showsFav = useFavouriteShows(currentUser?.uid);
+  const showWatch = useWatchingShows(currentUser?.uid);
 
   return (
     <>
       <HeaderComponent />
       <h2 className="font-title text-2xl antialiasing my-5 text-center">
-        MY FAV SHOWS
+        MY FAVAVOURITE SHOWS
       </h2>
       <div className="flex flex-col flex-wrap md:flex-row">
-        {shows &&
-          Object.keys(shows).map((key, index) => (
-            <CardComponent show={shows[key]} key={index} />
+        {showsFav &&
+          Object.keys(showsFav).map((key, index) => (
+            <CardComponent show={showsFav[key]} key={index} />
+          ))}
+      </div>
+      <hr />
+      <h2 className="font-title text-2xl antialiasing my-5 text-center">
+        CURRENTLY WATCHING
+      </h2>
+      <div className="flex flex-col flex-wrap md:flex-row">
+        {showWatch &&
+          Object.keys(showWatch).map((key) => (
+              <CardComponent show={showWatch[key]} />
           ))}
       </div>
     </>
