@@ -6,7 +6,7 @@ export interface searchMovieByName {
     language: string;
     genres: string[];
     rating: { average: number };
-    image: { medium: string };
+    image?: { medium: string };
     summary: string;
   };
 }
@@ -50,6 +50,6 @@ export interface showDetails {
   start: string;
   end: string;
   rating: number;
-  image: string;
+  image?: string;
   summary: string;
 }

@@ -6,6 +6,7 @@ import { setUserShows, deleteUserShow } from "../../../services/firebase.db";
 import { searchMovieBool } from "../../../services/models";
 import useFavoruiteCheck from "../../../customHooks/useFavouriteCheck";
 import { useEffect } from "react";
+import posterPlaceholder from "../../../assets/posterPlaceholder.png"
 
 const CardComponent = (props: propsMovieCard) => {
   const { currentUser } = CurrentUserConsumer();
@@ -25,7 +26,7 @@ const CardComponent = (props: propsMovieCard) => {
     <div className="card w-96 bg-base-100 shadow-xl m-3">
       <figure className="max-h-64">
         <img
-          src={props.show.show.image?.medium}
+          src={props.show.show.image?.medium || posterPlaceholder}
           alt={props.show.show.name}
           className="w-full"
         />

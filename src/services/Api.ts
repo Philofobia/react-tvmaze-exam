@@ -34,7 +34,7 @@ export const getShowDetails = async (id: string) => {
     start: data.premiered,
     end: data.ended,
     rating: data.rating.average,
-    image: data.image.original,
+    image: data.image?.original,
     summary: data.summary
   };
   return objData;
