@@ -15,6 +15,7 @@ import RegisterPage from "./Pages/Register/Register";
 import HomePage from "./Pages/Home/Home";
 import PageNotFound from "./Pages/PageNotFound/PageNotFound";
 import FavouritePage from "./Pages/Favourite/Favourite";
+import ShowDetailsPage from "./Pages/ShowDetails/ShowDetails";
 
 const App = () => {
   const router = createBrowserRouter([
@@ -41,6 +42,14 @@ const App = () => {
           <HomePage />
         </ProtectedRoute>
       ),
+    },
+    {
+      path: "/details/:idShow",
+      element: (
+        <ProtectedRoute>
+          <ShowDetailsPage />
+        </ProtectedRoute>
+      )
     },
     {
       path: "/error/pageNotFound",

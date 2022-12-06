@@ -19,18 +19,18 @@ const HomePage = () => {
     );
   };
   const handleShowFav = (show: searchMovieBool) => {
-    console.log(show.favourite);
     if (show.favourite === false) {
-      show.favourite = true;
       setUserShows(currentUser!.uid, show);
+      show.favourite = true;
     } else {
-      show.favourite = false;
       deleteUserShow(currentUser!.uid, show);
+      show.favourite = false;
     }
   };
   useEffect(() => {
     handleOnButtonSearch();
   }, [searchParam]);
+
   return (
     <>
     <HeaderComponent />

@@ -1,3 +1,5 @@
+import { MouseEventHandler } from "react";
+
 // API SEARCH SHOWS
 export interface searchMovieByName {
   show: {
@@ -26,5 +28,34 @@ export interface propsMovieCard {
 
 //FIREBASE DB GET
 export interface firebaseDbMovie {
-  [key: string]: searchMovieBool
+  [key: string]: searchMovieBool;
+}
+
+//SHOW DETAILS
+export interface showDetailsApi {
+  id: number;
+  name: string;
+  language: string;
+  genres: string[];
+  premiered: string;
+  ended: string;
+  rating: {
+    average: number;
+  };
+  image: {
+    original: string;
+  };
+  summary: string;
+}
+
+export interface showDetails {
+  id: number;
+  title: string;
+  language: string;
+  genres: string[];
+  start: string;
+  end: string;
+  rating: number;
+  image: string;
+  summary: string;
 }
