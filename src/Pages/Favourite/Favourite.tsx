@@ -3,16 +3,13 @@ import { useEffect, useState } from "react";
 import { firebaseDbMovie } from "../../services/models";
 import { searchMovieBool } from "../../services/models";
 import { CurrentUserConsumer } from "../../context/AuthContext";
-import {
-  setUserShows,
-  deleteUserShow,
-  getUsersShows,
-} from "../../services/firebase.db";
+import { setUserShows, deleteUserShow } from "../../services/firebase.db";
 import HeaderComponent from "../../shared/Header/Header";
+import useFavouriteShows from "../../customHooks/favouriteShowsHook";
 
 const FavouritePage = () => {
-  const [shows, setShow] = useState<firebaseDbMovie>();
   const { currentUser } = CurrentUserConsumer();
+  const shows = useFavouriteShows(currentUser?.uid);
 
   const handleShowFav = (show: searchMovieBool) => {
     if (show.favourite === false) {
@@ -24,9 +21,6 @@ const FavouritePage = () => {
     }
   };
 
-  useEffect(() => {
-    getUsersShows(currentUser!.uid).then((res) => setShow(res));
-  }, [currentUser?.uid]);
 
   return (
     <>

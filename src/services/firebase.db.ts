@@ -1,15 +1,6 @@
 import { database } from "../firebase";
-import { update, remove, ref, onValue } from "firebase/database";
-import { firebaseDbMovie, searchMovieBool } from "./models";
-
-export const getUsersShows = async (userId: string) => {
-  let data: firebaseDbMovie = {};
-  const userShow = ref(database, "users/" + userId + "/favShows");
-  onValue(userShow, (snapshot) => {
-    data = snapshot.val();
-  });
-  return data;
-};
+import { update, remove, ref } from "firebase/database";
+import { searchMovieBool } from "./models";
 
 export const setUserShows = async (userId: string, show: searchMovieBool) => {
   await update(ref(database, "users/" + userId + "/favShows"), {

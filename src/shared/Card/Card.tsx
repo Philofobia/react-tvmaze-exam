@@ -1,6 +1,5 @@
 import { propsMovieCard } from "../../services/models";
 import parse from "html-react-parser";
-import { useEffect } from "react";
 import { Link } from "react-router-dom";
 
 const CardComponent = (props: propsMovieCard) => {
