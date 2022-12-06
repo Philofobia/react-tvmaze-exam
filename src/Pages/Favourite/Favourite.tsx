@@ -16,10 +16,7 @@ const FavouritePage = () => {
       <div className="flex flex-col flex-wrap md:flex-row">
         {shows &&
           Object.keys(shows).map((key, index) => (
-            <CardComponent
-              show={shows[key]}
-              key={index}
-            />
+            <CardComponent show={shows[key]} key={index} />
           ))}
       </div>
     </>

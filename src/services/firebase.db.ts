@@ -6,8 +6,12 @@ export const setUserShows = async (userId: string, show: searchMovieBool) => {
   await update(ref(database, "users/" + userId + "/favShows"), {
     [show.show.id]: show,
   });
+  await update(ref(database, "users/" + userId + "/favShowsId"), {
+    [show.show.id]: show.show.id 
+  });
 };
 
 export const deleteUserShow = async (userId: string, show: searchMovieBool) => {
   await remove(ref(database, "users/" + userId + "/favShows/" + show.show.id));
+  await remove(ref(database, "users/" + userId + "/favShowsId/" + show.show.id));
 };

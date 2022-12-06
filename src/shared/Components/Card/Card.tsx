@@ -20,7 +20,6 @@ const CardComponent = (props: propsMovieCard) => {
       deleteUserShow(currentUser!.uid, show);
     }
   };
-  useEffect(()=> {}, [favourite])
 
   return (
     <div className="card w-96 bg-base-100 shadow-xl m-3">
