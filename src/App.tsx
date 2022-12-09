@@ -6,6 +6,7 @@ import {
 
 import { AuthContextProvider } from "./context/AuthContext";
 import ProtectedRoute from "./context/ProtectedRoute";
+import AuthNullRoute from "./context/AuthNullRoute";
 
 import { Provider } from "react-redux";
 import { store } from "./redux/store/store";
@@ -21,11 +22,19 @@ const App = () => {
   const router = createBrowserRouter([
     {
       path: "/authentication/login",
-      element: <LoginPage />,
+      element: (
+        <AuthNullRoute>
+          <LoginPage />
+        </AuthNullRoute>
+      ),
     },
     {
       path: "/authentication/register",
-      element: <RegisterPage />,
+      element: (
+        <AuthNullRoute>
+          <RegisterPage />
+        </AuthNullRoute>
+      ),
     },
     {
       path: "/favourites",
@@ -49,7 +58,7 @@ const App = () => {
         <ProtectedRoute>
           <ShowDetailsPage />
         </ProtectedRoute>
-      )
+      ),
     },
     {
       path: "/error/pageNotFound",
@@ -69,11 +78,10 @@ const App = () => {
     },
   ]);
 
-
   return (
     <AuthContextProvider>
       <Provider store={store}>
-          <RouterProvider router={router} />
+        <RouterProvider router={router} />
       </Provider>
     </AuthContextProvider>
   );
