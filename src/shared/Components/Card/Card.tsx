@@ -6,6 +6,7 @@ import {
   setUserShows,
   deleteUserShow,
   setUserWatchingShow,
+  deleteUserWatchingShow,
 } from "../../../services/firebase.db";
 import { searchMovieBool } from "../../../services/models";
 import useFavoruiteCheck from "../../../customHooks/useFavouriteCheck";
@@ -15,7 +16,7 @@ import useWatchingChek from "../../../customHooks/useWatchingCheck";
 const CardComponent = (props: propsMovieCard) => {
   const { currentUser } = CurrentUserConsumer();
   const favourite = useFavoruiteCheck(props.show.show.id);
-  const watching = useWatchingChek(props.show.show.id);
+  const watchingCheck = useWatchingChek(props.show.show.id);
 
   const handleShowFav = (show: searchMovieBool) => {
     if (show.favourite === false) {
@@ -28,7 +29,12 @@ const CardComponent = (props: propsMovieCard) => {
   };
 
   const handleShowWatch = (show: searchMovieBool) => {
-    setUserWatchingShow(currentUser!.uid, show);
+    if (watchingCheck === false) {
+      deleteUserWatchingShow(currentUser!.uid);
+      setUserWatchingShow(currentUser!.uid, show);
+    } else {
+      deleteUserWatchingShow(currentUser!.uid);
+    }
   };
 
   return (
@@ -72,7 +78,7 @@ const CardComponent = (props: propsMovieCard) => {
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              fill={watching ? "black" : "none"}
+              fill={watchingCheck ? "black" : "none"}
               viewBox="1 0 24 24"
               strokeWidth="1.5"
               stroke="currentColor"

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { ref, onValue, off } from "firebase/database";
+import { ref, onValue } from "firebase/database";
 import { database } from "../firebase";
 import { firebaseDbMovie } from "../services/models";
 
