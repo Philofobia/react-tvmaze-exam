@@ -6,19 +6,18 @@
 
 body {
   margin: 0;
+  width: 100%;
+  height: 100%;
 }
 
 .btn {
   background-image: linear-gradient(to right, #fc6076, #ff9a44, #ef9d43, #e75516);
   box-shadow: 0 4px 15px 0 rgba(252, 104, 110, 0.75);
-  width: 100%;
-  text-align: center;
   font-weight: bolder;
   transition: 0.5s;
   background-size: 200% auto;
   color: rgba(0, 0, 0, 0.67);
   border-radius: 10px;
-  display: block;
   border: 0;
 }
 
@@ -29,31 +28,16 @@ body {
   transition: all .4s ease-in-out;
   text-decoration: none;
 }
-.google-btn {
+#google-btn {
   border: 1px solid lightblue;
-  position: relative;
-  border-radius: 5px;
-  height: 40px;
-  margin-top: -30px;
+  background-image: linear-gradient(to right, white, white);
+  box-shadow: 0 4px 15px 0 rgba(248, 245, 245, 0.75);
 }
-.google-btn:hover {
-  background-position: 100% 0;
-  -o-transition: all .4s ease-in-out;
-  -webkit-transition: all .4s ease-in-out;
-  transition: all .4s ease-in-out;
-  text-decoration: none;
-}
-.google-btn > * {
-  position: absolute;
-}
-.google-btn > img {
-  top: 20%;
-  left: 5%;
-}
+
 .reg-btn {
   line-height: 50px;
 }
 
 #btn-search {
   width: auto;
-}
+} 
