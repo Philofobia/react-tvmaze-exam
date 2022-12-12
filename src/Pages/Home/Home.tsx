@@ -23,7 +23,7 @@ const HomePage = () => {
   return (
     <>
     <HeaderComponent />
-      <h1 className="font-title text-2xl antialiasing my-5 text-center">
+      <h1 className="font-title text-4xl antialiasing my-5 text-center">
         SEARCH YOUR FAVORITE MOVIE
       </h1>
       <div className="flex items-center mx-5 font-title text-2xl antialiasing">
@@ -31,7 +31,7 @@ const HomePage = () => {
           <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
             <svg
               aria-hidden="true"
-              className="w-5 h-5 text-orange-500 dark:text-orange-400"
+              className="w-5 h-5 text-orange-500"
               fill="currentColor"
               viewBox="0 0 20 20"
               xmlns="http://www.w3.org/2000/svg"
@@ -46,7 +46,7 @@ const HomePage = () => {
           <input
             type="text"
             id="simple-search"
-            className="bg-gray-50 border border-orange-300 text-gray-900 text-sm rounded-lg focus:ring-orange-500 focus:border-orange-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-orange-500 dark:focus:border-orange-500"
+            className="font-body text-sm antialiasing border border-orange-300 rounded-lg sm:text-xl focus:ring-orange-500 focus:border-orange-500 block w-full pl-10 p-2.5"
             placeholder="Search a movie"
             onChange={(e) => setSearch(e.target.value)}
           />
@@ -74,7 +74,7 @@ const HomePage = () => {
         </button>
       </div>
       <hr className="mx-5 my-5" />
-      <div className="flex flex-col flex-wrap md:flex-row">
+      <div className="flex flex-wrap justify-center">
         {shows &&
           Object.keys(shows).map((key) => (
             <CardComponent
