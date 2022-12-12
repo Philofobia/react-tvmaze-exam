@@ -15,7 +15,7 @@ const FavouritePage = () => {
       <h2 className="font-title text-2xl antialiasing my-5 text-center">
         MY FAVAVOURITE SHOWS
       </h2>
-      <div className="flex flex-col flex-wrap md:flex-row">
+      <div className="flex flex-wrap justify-center">
         {showsFav &&
           Object.keys(showsFav).map((key, index) => (
             <CardComponent show={showsFav[key]} key={index} />
@@ -25,7 +25,7 @@ const FavouritePage = () => {
       <h2 className="font-title text-2xl antialiasing my-5 text-center">
         CURRENTLY WATCHING
       </h2>
-      <div className="flex flex-col flex-wrap md:flex-row">
+      <div className="flex flex-wrap justify-center">
         {showWatch &&
           Object.keys(showWatch).map((key) => (
               <CardComponent show={showWatch[key]} key={key} />

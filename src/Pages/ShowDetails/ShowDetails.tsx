@@ -25,7 +25,7 @@ const ShowDetailsPage = () => {
             <img
               src={showDetails?.image || posterPlacehoder}
               alt={showDetails.title}
-              className="rounded-lg"
+              className="rounded-lg shadow-xl"
             />
           </div>
           <div className="flex flex-col justify-center">
@@ -47,18 +47,18 @@ const ShowDetailsPage = () => {
                 </svg>
               </button>
             </div>
-            <h1 className="text-4xl font-semibold">{showDetails.title}</h1>
-            <p className="mt-2 text-sm">
+            <h1 className="font-title antialiasing text-4xl font-semibold">{showDetails.title}</h1>
+            <p className="mt-2 font-body text-lg antialiasing">
               {showDetails.start || "N/A"} / {showDetails.end || "N/A"}
             </p>
 
-            <span className="mt-10 text-justify lg:max-w-[60ch]">
+            <span className="font-body text-lg antialiasing mt-10 text-justify lg:max-w-[60ch]">
               {showDetails.summary
                 ? parse(`${showDetails.summary}`)
                 : "NO INFO"}
             </span>
 
-            <div className="mt-5 flex gap-3">
+            <div className="font-body text-base antialiasing mt-5 flex gap-3">
               {showDetails.genres?.map((genre, i) => (
                 <span className="badge badge-outline" key={i}>
                   {genre}
